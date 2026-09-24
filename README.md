@@ -1,4 +1,9 @@
-# web-retrieval-ladder
+<p align="center"><img src="assets/logo-light.jpg" alt="Jina Lord: The Blocked-Fetch Retrieval Ladder" width="420"></p>
+
+# Jina Lord: The Blocked-Fetch Retrieval Ladder
+
+*Plugin name: `web-retrieval-ladder` (the fun name is for humans; the machine name is what fires it).*
+
 
 A Claude Code plugin that turns "the fetch got blocked" into a diagnosis and a
 next rung instead of a blind retry. It forks and supersedes the public

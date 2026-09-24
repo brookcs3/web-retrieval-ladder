@@ -4,6 +4,12 @@ All notable changes to the `fetching-blocked-urls` skill are documented in
 this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versions track the skill; the plugin `web-retrieval-ladder` carries its own.
 
+## [1.0.1] - 2026-09-24
+
+### Changed
+
+- Named the plugin "Jina Lord: The Blocked-Fetch Retrieval Ladder"; added the logo (assets/).
+
 ## [1.0.0] - 2026-09-24
 
 Forked from oaustegard `fetching-blocked-urls` 0.1.1 (2026-01-27) and

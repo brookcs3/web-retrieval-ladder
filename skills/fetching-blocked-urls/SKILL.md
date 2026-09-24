@@ -16,7 +16,7 @@ metadata:
   version: 1.0.0
 ---
 
-# Fetching Blocked URLs: the web-retrieval ladder
+# Jina Lord: The Blocked-Fetch Retrieval Ladder
 
 A five-rung escalation ladder from the open web to a real browser, plus the
 diagnosis discipline that decides when to climb. Every rung, header, parse

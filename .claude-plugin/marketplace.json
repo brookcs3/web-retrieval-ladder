@@ -1,6 +1,6 @@
 {
   "name": "cameron-web",
-  "description": "Cameron Brooks's web retrieval plugins: the cost-ordered fetch ladder and its wall-detecting hook.",
+  "description": "Jina Lord: The Blocked-Fetch Retrieval Ladder. Cameron Brooks's web retrieval plugins: the cost-ordered fetch ladder and its wall-detecting hook.",
   "owner": {
     "name": "Cameron Brooks"
   },
@@ -8,7 +8,7 @@
     {
       "name": "web-retrieval-ladder",
       "source": "./",
-      "description": "Cost-ordered web retrieval ladder (WebFetch, browser UA, keyed r.jina.ai reader, s.jina.ai search, archive.org go-around, seleniumbase-stealth) with a wall-detecting PostToolUse/PostToolUseFailure hook and the fetching-blocked-urls skill."
+      "description": "Jina Lord: The Blocked-Fetch Retrieval Ladder. Cost-ordered web retrieval ladder (WebFetch, browser UA, keyed r.jina.ai reader, s.jina.ai search, archive.org go-around, seleniumbase-stealth) with a wall-detecting PostToolUse/PostToolUseFailure hook and the fetching-blocked-urls skill."
     }
   ]
 }

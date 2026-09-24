@@ -1,4 +1,4 @@
-# fetching-blocked-urls
+# Jina Lord: The Blocked-Fetch Retrieval Ladder
 
 The web-retrieval ladder as a skill: five rungs from the open web to a real
 browser (WebFetch, browser-UA curl, the keyed `r.jina.ai` reader, `s.jina.ai`

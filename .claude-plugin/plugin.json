@@ -1,7 +1,7 @@
 {
   "name": "web-retrieval-ladder",
-  "version": "1.0.0",
-  "description": "A cost-ordered retrieval ladder for walled web pages: WebFetch, then a real-browser User-Agent, then the keyed r.jina.ai reader with the browser engine, then s.jina.ai search, then the archive.org go-around, then the seleniumbase-stealth real-browser tier. Ships the fetching-blocked-urls skill, a ladder.py instrument with diagnosis STATUS lines, and a PostToolUse/PostToolUseFailure hook that flags wall signatures.",
+  "version": "1.0.1",
+  "description": "Jina Lord: The Blocked-Fetch Retrieval Ladder. A cost-ordered retrieval ladder for walled web pages: WebFetch, then a real-browser User-Agent, then the keyed r.jina.ai reader with the browser engine, then s.jina.ai search, then the archive.org go-around, then the seleniumbase-stealth real-browser tier. Ships the fetching-blocked-urls skill, a ladder.py instrument with diagnosis STATUS lines, and a PostToolUse/PostToolUseFailure hook that flags wall signatures.",
   "author": {
     "name": "Cameron Brooks"
   }

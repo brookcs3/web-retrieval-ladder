@@ -102,7 +102,7 @@ same day; recharged to ~906M on 2026-07-14 for ~$50). The dashboard balance
 updates with a lag of minutes (it read the same before and after a
 14,744-token call), so the per-call charge is the `x-usage-tokens` response
 header, not the balance. The reader bills output tokens only; `X-Token-Budget`
-409s are unbilled (memory `seal-jina-tunnel-key`); `s.jina.ai` bills a flat
+409s are unbilled; `s.jina.ai` bills a flat
 10,000 per call with or without `X-Respond-With: no-content`
 (`meta.usage.tokens` is 10000 either way, verified 2026-09-24: 8 hits at
 1,250 each, or 3 hits at 3,334 each with content).
@@ -215,7 +215,7 @@ the number in parentheses):
   `Title:` / `URL Source:` / `Markdown Content:` header block (12,325 bytes
   for the Wikipedia page vs 27,065 as markdown), `html` returns the raw HTML
   (174,371 bytes). The unwrap rule below applies to markdown only. Does
-  nothing on `fo=json` URLs (memory `seal-jina-tunnel-key`).
+  nothing on `fo=json` URLs.
 
 Retry policy: up to 4 attempts, backoff `4 + 3*i` seconds (4, 7, 10, 13).
 Seconds, not minutes. A minimal loop that runs in both zsh and bash (verified
@@ -535,8 +535,7 @@ theorize past it.
   some phrases thinly or line-wrapped), not a curl-vs-browser gap: on
   2026-09-24 direct curl, the default engine, and the browser engine all
   returned total 2891 for the same query. The old "curl 3 vs browser 37"
-  reading was corrected on 2026-07-19 (memory `seal-loc-search-workflow`,
-  rule 4). Confirm the phrase against the page's ALTO text before concluding.
+  reading was corrected on 2026-07-19rule 4). Confirm the phrase against the page's ALTO text before concluding.
 - **Binary captures.** `%PDF` or a NUL in the first 400 bytes means raw-byte
   greps prove nothing; `pdftotext` first, and an image capture is graded as
   the giant-file channel, not cleared.

@@ -79,7 +79,7 @@ CASES = [
  ("16 empty stdin", "", False, [], []),
  ("17 malformed JSON", "{not json", False, [], []),
  ("18 Bash reader URL challenge (strip r.jina.ai prefix)", bash(f'curl -s -H "Authorization: Bearer $JINA_API_KEY" -H "X-Engine: browser" "https://r.jina.ai/{HMDB}"', f"Title: Just a moment...\nURL Source: {HMDB}\n\nMarkdown Content:\nVerifying you are human. This may take a few seconds.\n"), True, [f'diagnose "{HMDB}"'], ["diagnose \"https://r.jina.ai", "diagnose https://r.jina.ai"]),
- ("19 Bash git push 403 (not a web wall)", bash("git push origin main", "", "remote: Permission to foo/bar.git denied to cameron.\nfatal: unable to access 'https://github.com/foo/bar.git/': The requested URL returned error: 403"), False, [], []),
+ ("19 Bash git push 403 (not a web wall)", bash("git push origin main", "", "remote: Permission to foo/bar.git denied to user.\nfatal: unable to access 'https://github.com/foo/bar.git/': The requested URL returned error: 403"), False, [], []),
  ("20 Bash archive.org 429 via curl -si", bash("curl -si 'http://archive.org/wayback/available?url=chroniclingamerica.loc.gov/lccn/sn89058318/1916-10-12/ed-1/seq-3/'", "HTTP/1.1 429 Too Many Requests\r\nServer: nginx\r\nContent-Type: text/html\r\n\r\n<html><head><title>429 Too Many Requests</title></head><body><h1>Too Many Requests</h1></body></html>"), True, ["429", "wayback"], []),
  ("21 PostToolUseFailure Bash curl -f exit 22", failure("Bash", {"command": f'curl -sf "{HMDB}"'}, "Exit code 22\ncurl: (22) The requested URL returned error: 403"), True, ["403", HMDB, "PostToolUseFailure"], []),
  ("22 PostToolUseFailure WebFetch", failure("WebFetch", {"url": HMDB, "prompt": "x"}, "Error: Request failed with status code 403"), True, ["403", HMDB, "PostToolUseFailure"], []),

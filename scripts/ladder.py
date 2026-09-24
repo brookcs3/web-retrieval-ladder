@@ -76,7 +76,7 @@ DISCIPLINE
 PROVENANCE
   the author's earlier hunt_ca2.py (fetch, as_json, search_web),
   the author's earlier wayback_gate.py (availability, cdx, grep_capture),
-  docs/EXAMPLE_LOG.md #8, #19, #21 item 6, and the seal-* memory files.
+  docs/EXAMPLE_LOG.md #8, #19, #21 item 6, and the author's working notes.
 """
 import gzip
 import http.client

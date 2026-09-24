@@ -20,7 +20,7 @@ metadata:
 
 A five-rung escalation ladder from the open web to a real browser, plus the
 diagnosis discipline that decides when to climb. Every rung, header, parse
-rule, and gotcha below was field-proven on Project Seal (loc.gov Chronicling
+rule, and gotcha below was field-proven on a large newspaper-archive research project (loc.gov Chronicling
 America, hmdb, archive.org, the Veridian newspaper archives) between
 2026-07-13 and 2026-08-16, re-verified live on 2026-09-24 while this file was
 written, then adversarially re-tested the same day (every bash block below was
@@ -33,9 +33,7 @@ variable, run one call, read the STATUS line.**
 
 ## When to reach for it, and when not to
 
-**Rung 0 law (Cameron, 2026-07-22): "for just basic search we dont need jina,
-jina is for sites like loc etc, u have web search u can use normally, jina is
-if ur fetch isnt enough."** Open-web lookups (encyclopedias, Ballotpedia,
+**Rung 0 law: plain search needs no proxy. The reader is for walled sites, and only when a normal fetch is not enough.** Open-web lookups (encyclopedias, Ballotpedia,
 historical societies, .gov pages, marker databases, Wikipedia, API endpoints)
 go WebSearch to find, WebFetch to read, plain curl for grep-style checks. jina
 spends metered key quota and adds tens of seconds of latency plus its own
@@ -56,9 +54,7 @@ Start climbing only on a wall signal:
 | 429 from `archive.org/wayback/available` | Per-IP limit on the availability API | 4 (the go-around) |
 | 402 from `r.jina.ai` | Key balance exhausted | `health`, then flag the top-up |
 
-**The selenium scope clause (Cameron, 2026-08-09): "selenium is only for
-things that u need it for; a simple web search shouldn't be done on it, it
-takes longer and is less effective."** Rung 5 is reserved for genuine
+**The selenium scope clause: the stealth browser is only for pages that need it. A plain search or an unwalled page through it is slower and less effective.** Rung 5 is reserved for genuine
 Turnstile / PerimeterX / managed-challenge grounds (the Veridian archives:
 digmichnews, nyshistoricnewspapers, virginiachronicle, CHNC, WY;
 NewspaperArchive; amlegal). Never route a plain open-web search or an unwalled
@@ -67,13 +63,13 @@ page through it; if WebSearch is exhausted, use rung 3 or plain curl.
 ## Key handling
 
 Lookup order, first hit wins: `JINA_API_KEY` in the environment, else
-`~/.config/jina/api_key`, else `/Users/cameronbrooks/Project-Seal/jngaapi.txt`.
+`~/.config/jina/api_key`.
 All three hold the bare 65-character `jina_...` token with no `KEY=` prefix.
 Never print the key; confirm presence by length only.
 
 ```bash
 if [ -z "$JINA_API_KEY" ]; then
-  for f in "$HOME/.config/jina/api_key" /Users/cameronbrooks/Project-Seal/jngaapi.txt; do
+  for f in "$HOME/.config/jina/api_key" "${JINA_API_KEY_FILE:-}"; do
     [ -s "$f" ] && { JINA_API_KEY="$(tr -d '[:space:]' < "$f")"; export JINA_API_KEY; break; }
   done
 fi
@@ -92,7 +88,7 @@ Shell facts that cost real sessions:
   does not (non-interactive bash reads no rc file at all).
 - Every Bash tool call is a fresh shell. An `export` in a previous call is
   gone. If the key is missing, prefix the load in the SAME command:
-  `export JINA_API_KEY="$(tr -d '[:space:]' < /Users/cameronbrooks/Project-Seal/jngaapi.txt)" && python3 ...`
+  `export JINA_API_KEY="$(tr -d '[:space:]' < ~/.config/jina/api_key)" && python3 ...`
 - Balance check (the `health` subcommand does this):
 
 ```bash
@@ -403,21 +399,21 @@ is required); this skill never solves a CAPTCHA programmatically.
 For batch hunts, the driver-script form
 (`~/.seleniumbase-stealth/venv/bin/python /tmp/<name>.py`, one profile per
 site, land once, AJAX for content, filtered windows out) beats per-call MCP
-by 2-3x; see `Project-Seal/docs/DRIVER_SCRIPTS_EVOLUTION.md`.
+by 2-3x.
 
 ## The script: ladder.py
 
 `scripts/ladder.py` (this plugin) wraps the rungs with the STATUS line built
-in. It descends from `Project-Seal/.oracle/scripts/hunt_ca2.py` (`fetch()`
+in. It descends from the author's earlier `hunt_ca2.py` (`fetch()`
 ladder, `as_json()`, `search_web()`) and `wayback_gate.py`. Run with the key
 loaded (or `JINA_API_KEY_FILE=<path>` to name one key file;
 `JINA_API_KEY_FILE=/dev/null` runs keyless on purpose); the key never appears
 on argv, in a trace, or on stdout. The plugin root resolves as
 `${CLAUDE_PLUGIN_ROOT}` inside the plugin, or
-`/Users/cameronbrooks/projects/web-retrieval-ladder` in development.
+`/path/to/web-retrieval-ladder` in development.
 
 ```bash
-L="${CLAUDE_PLUGIN_ROOT:-/Users/cameronbrooks/projects/web-retrieval-ladder}/scripts/ladder.py"
+L="${CLAUDE_PLUGIN_ROOT:-/path/to/web-retrieval-ladder}/scripts/ladder.py"
 python3 "$L" fetch "https://www.hmdb.org/m.asp?m=1"                  # rung 1 -> rung 2; STATUS line, then the unwrapped body
 python3 "$L" fetch "https://en.wikipedia.org/wiki/Chronicling_America" --selector "#firstHeading"   # X-Target-Selector (starts at rung 2)
 python3 "$L" search '"W. H. Kidd" Aberdeen Mississippi' 8             # rung 3: URLs + titles
@@ -481,8 +477,7 @@ theorize past it.
 1. **An empty result is a diagnosis, not a throttle.** Empty means a bad or
    wrapped phrase, a date filter dropping everything, an unmapped facet value,
    a `%20` where a `+` was needed, or a self-thrown Turnstile from bursting.
-   It does not mean the key is rate-limited. Cameron, 2026-07-19: "nothing
-   cooled, its your metholodgy not the website."
+   It does not mean the key is rate-limited. The lesson, learned the expensive way: nothing had cooled; it was the methodology, not the website.
 2. **Change exactly one variable per retry.** The variables: User-Agent, URL
    encoding, the rung, pacing, scheme (http vs https), exact vs wildcard form,
    payload size. Two changes at once teach nothing.
@@ -560,7 +555,7 @@ theorize past it.
 - The proxy is stochastic. It can catch a Turnstile itself. One challenge via
   jina proves nothing about the site.
 - archive.org: the availability API 429s per IP; CDX 503s under load;
-  `web.archive.org` captures usually pull fine. On Project Seal, wayback
+  `web.archive.org` captures usually pull fine. In the archive workflow this ladder came from, wayback
   captures, archive.org, and HathiTrust are instrument-only and banned as
   cited sources.
 - DataDome and similar behavioral systems are not beatable at any rung here,
@@ -573,10 +568,7 @@ theorize past it.
 
 ## Provenance
 
-Memory files `seal-jina-tunnel-key`, `seal-loc-search-workflow`,
-`seal-direct-ca-channel-cookbook`, `seal-tool-ladder-websearch-first`,
-`seal-wayback-viewer-channel`, `seal-never-claim-context-exhaustion`,
-`seal-opus-flail-patterns`; scripts `hunt_ca2.py`, `wayback_gate.py`;
+The author's working notes; scripts `hunt_ca2.py`, `wayback_gate.py`;
 `docs/EXAMPLE_LOG.md` sections 8, 19, 21; `docs/DRIVER_SCRIPTS_EVOLUTION.md`;
 the `stealth-browsing` skill. Live re-verification 2026-09-24 (twice: the build and an adversarial pass the
 same day, every bash block run under bash 3.2 and zsh 5.9): findagrave

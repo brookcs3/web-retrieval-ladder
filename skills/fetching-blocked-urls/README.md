@@ -26,6 +26,5 @@ curl -s --max-time 90 -H "Authorization: Bearer $JINA_API_KEY" -H "X-Engine: bro
   -H "X-No-Cache: true" -H "X-Token-Budget: 120000" "https://r.jina.ai/https://www.hmdb.org/m.asp?m=1"
 ```
 
-Key: `JINA_API_KEY` from the environment, else `~/.config/jina/api_key`, else
-`Project-Seal/jngaapi.txt`; never printed. Slash command:
+Key: `JINA_API_KEY` from the environment, else `~/.config/jina/api_key`; never printed. Slash command:
 `/fetch-blocked <url> [what to extract]`.

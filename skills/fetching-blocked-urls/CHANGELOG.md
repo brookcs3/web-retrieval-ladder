@@ -4,6 +4,12 @@ All notable changes to the `fetching-blocked-urls` skill are documented in
 this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versions track the skill; the plugin `web-retrieval-ladder` carries its own.
 
+## [1.1.0] - 2026-09-24
+
+### Changed
+
+- Public release: removed machine-local paths and the private keyfile fallback (the key is read from `JINA_API_KEY`, then `~/.config/jina/api_key`, then `JINA_API_KEY_FILE`); provenance genericized.
+
 ## [1.0.1] - 2026-09-24
 
 ### Changed
@@ -13,7 +19,7 @@ Versions track the skill; the plugin `web-retrieval-ladder` carries its own.
 ## [1.0.0] - 2026-09-24
 
 Forked from oaustegard `fetching-blocked-urls` 0.1.1 (2026-01-27) and
-rewritten in full around the Project Seal retrieval stack (2026-07-13 to
+rewritten in full around the author's newspaper-archive retrieval stack (2026-07-13 to
 2026-08-16), re-verified live on 2026-09-24. The skill name is kept for its
 trigger vocabulary; the body is new. The original is kept as `SKILL.md.orig`.
 
@@ -41,8 +47,7 @@ trigger vocabulary; the body is new. The original is kept as `SKILL.md.orig`.
 - The diagnosis discipline: an empty result is a diagnosis, one variable per
   retry, one call at a time, no cooldown narration, "blocked" only when the
   response says so, a 200 is not a verdict, no CAPTCHA solving here.
-- Key handling: lookup order (environment, `~/.config/jina/api_key`,
-  `Project-Seal/jngaapi.txt`), never printed, the `~/.zshenv` note for the
+- Key handling: lookup order (environment, `~/.config/jina/api_key`), never printed, the `~/.zshenv` note for the
   Claude Code Bash tool, the per-call fresh-shell note, and the balance
   endpoint (`health`).
 - Gotchas: italics rendered as underscores mid-string, the cache and

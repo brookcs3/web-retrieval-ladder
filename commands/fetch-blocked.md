@@ -10,7 +10,7 @@ rung per step, one variable per retry, read the STATUS line before deciding,
 never narrate cooldowns, never print the key.
 
 Script: `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/ladder.py"` (development
-checkout: `/Users/cameronbrooks/projects/web-retrieval-ladder/scripts/ladder.py`).
+checkout: `/path/to/web-retrieval-ladder/scripts/ladder.py`).
 
 1. Rung 0 check. If the URL is ordinary open web and no wall signal has been
    seen yet, use WebFetch first and stop there if it works. This command

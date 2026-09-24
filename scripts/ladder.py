@@ -59,7 +59,7 @@ WAYBACK
 
 KEY
   JINA_API_KEY from the environment, else ~/.config/jina/api_key, else
-  /Users/cameronbrooks/Project-Seal/jngaapi.txt. JINA_API_KEY_FILE=<path>, when set,
+  JINA_API_KEY_FILE=<path>, when set,
   replaces that keyfile list with the one path (JINA_API_KEY_FILE=/dev/null runs keyless
   on purpose). The key is never printed: not on stdout, not in a trace, not on curl's
   argv (headers and the dashboard URL travel in a 0600 config file, so ps never sees it).
@@ -74,8 +74,8 @@ DISCIPLINE
   greps across italic spans false-miss: grep non-italic words.
 
 PROVENANCE
-  Project-Seal/.oracle/scripts/hunt_ca2.py (fetch, as_json, search_web),
-  Project-Seal/.oracle/scripts/wayback_gate.py (availability, cdx, grep_capture),
+  the author's earlier hunt_ca2.py (fetch, as_json, search_web),
+  the author's earlier wayback_gate.py (availability, cdx, grep_capture),
   docs/EXAMPLE_LOG.md #8, #19, #21 item 6, and the seal-* memory files.
 """
 import gzip
@@ -115,7 +115,7 @@ CHALLENGE_WIDGET = ('cf-turnstile', 'challenges.cloudflare.com', 'PerimeterX', '
 BLOCKING_STATUS = (401, 403, 429, 503)
 SHORT_BODY = 30000
 KEYFILES = (os.path.expanduser('~/.config/jina/api_key'),
-            '/Users/cameronbrooks/Project-Seal/jngaapi.txt')
+)
 JINA_BUDGET = 120000
 ARCHIVE_PACE = 1.5
 CTRL = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f]')
@@ -708,7 +708,7 @@ def cmd_fetch(argv):
             return _emit(o, 1, opts, o.clause)
     if opts['rung'] <= 2:
         if not key:
-            trace('# rung=2: no key (env, ~/.config/jina/api_key, jngaapi.txt); anonymous tier')
+            trace('# rung=2: no key (env, ~/.config/jina/api_key, JINA_API_KEY_FILE); anonymous tier')
         o = rung2(url, key, opts['format'], opts['selector'], opts['timeout'] or 90)
         outcomes[2] = o
         if o.verdict == 'ok':
@@ -1042,7 +1042,7 @@ def cmd_health(argv):
         return rc
 
     if not key:
-        return done('# STATUS: KEY-402 | rung=2 | no key in env, ~/.config/jina/api_key, or jngaapi.txt '
+        return done('# STATUS: KEY-402 | rung=2 | no key in env, ~/.config/jina/api_key, or JINA_API_KEY_FILE '
                     '(or JINA_API_KEY_FILE names an empty path)', 2)
     # The dashboard needs api_key= in the query (a bare Authorization header answers 422,
     # verified 2026-09-24); request() keeps that URL in the 0600 config file, off argv.

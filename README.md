@@ -33,7 +33,7 @@ Four parts:
 From the local checkout (the `cameron-web` marketplace lives inside the repo):
 
 ```
-claude plugin marketplace add /Users/cameronbrooks/projects/web-retrieval-ladder
+claude plugin marketplace add /path/to/web-retrieval-ladder
 claude plugin install web-retrieval-ladder@cameron-web
 ```
 
@@ -126,7 +126,7 @@ limits, not web walls), and interrupted or timed-out tool calls.
 
 `ladder.py` reads the jina key from, in order: the `JINA_API_KEY` environment
 variable, `~/.config/jina/api_key`, then
-`/Users/cameronbrooks/Project-Seal/jngaapi.txt`. The key file is the bare
+`~/.config/jina/api_key`. The key file is the bare
 token, no `KEY=` prefix. The key is never printed (not on stdout, not in a
 trace, not on curl's argv); on a 402 or a 401 the STATUS line says `KEY-402`
 and nothing else.

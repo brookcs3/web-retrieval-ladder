@@ -535,7 +535,7 @@ theorize past it.
   some phrases thinly or line-wrapped), not a curl-vs-browser gap: on
   2026-09-24 direct curl, the default engine, and the browser engine all
   returned total 2891 for the same query. The old "curl 3 vs browser 37"
-  reading was corrected on 2026-07-19rule 4). Confirm the phrase against the page's ALTO text before concluding.
+  reading was corrected on 2026-07-19 (rule 4). Confirm the phrase against the page's ALTO text before concluding.
 - **Binary captures.** `%PDF` or a NUL in the first 400 bytes means raw-byte
   greps prove nothing; `pdftotext` first, and an image capture is graded as
   the giant-file channel, not cleared.

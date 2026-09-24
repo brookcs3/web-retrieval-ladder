@@ -1,0 +1,29 @@
+{
+  "description": "Flags anti-bot wall signatures (403, Turnstile, PerimeterX, DataDome, 418, 429) in WebFetch and Bash output, on both the success and the failure event, and points the session at the fetching-blocked-urls ladder instead of a blind re-fetch.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "WebFetch|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/wall_detect.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "WebFetch|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/wall_detect.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
